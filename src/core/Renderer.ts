@@ -14,10 +14,10 @@ export interface IRenderer {
 export class TableRenderer implements IRenderer {
   // EventBus reserved for future use (e.g., cell render events)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  private eventBus: EventBus
+  // private eventBus: EventBus
 
-  constructor(eventBus: EventBus) {
-    this.eventBus = eventBus
+  constructor(_eventBus: EventBus) {
+    // this.eventBus = eventBus
   }
 
   /**

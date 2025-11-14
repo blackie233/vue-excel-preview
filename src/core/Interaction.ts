@@ -253,8 +253,8 @@ export class SelectionInteraction {
     for (let row = startRow; row <= endRow; row++) {
       const rowData: string[] = []
       for (let col = startCol; col <= endCol; col++) {
-        if (data[row] && data[row][col]) {
-          const cellData = data[row][col]
+        if (data[row] && data[row]?.[col]) {
+          const cellData = data[row]?.[col]
           // Use formatter if provided (e.g., Renderer.formatCellValue), otherwise use raw value
           const cellValue = formatter ? formatter(cellData) : String(cellData?.value || '')
           rowData.push(cellValue)

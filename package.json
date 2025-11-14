@@ -1,8 +1,15 @@
 {
   "name": "@blackie233/vue-excel-preview",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "一个基于 Vue 3 构建的轻量级 Excel 预览组件 | A lightweight Excel preview component built with Vue 3 and design patterns",
   "type": "module",
+  "repository": {
+    "url": "https://github.com/blackie233/vue-excel-preview.git"
+  },
+  "bugs": {
+    "url": "https://github.com/blackie233/vue-excel-preview/issues"
+  },
+  "homepage": "https://github.com/blackie233/vue-excel-preview#readme",
   "main": "./dist/excel-preview.umd.js",
   "module": "./dist/excel-preview.es.js",
   "types": "./dist/index.d.ts",
@@ -24,6 +31,7 @@
     "build": "vue-tsc -b && vite build",
     "build:lib": "vue-tsc --project tsconfig.lib.json && vite build --mode lib",
     "preview": "vite preview",
+    "example": "vite --open /example/index.html",
     "prepublishOnly": "npm run build:lib"
   },
   "peerDependencies": {

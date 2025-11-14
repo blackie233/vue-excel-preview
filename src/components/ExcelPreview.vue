@@ -118,7 +118,7 @@ import {Events} from '../core/EventBus'
 import type {IWorkbookData, ICellData} from '../core/types'
 
 // Props for customization
-interface Props {
+export interface Props {
   // Error state configuration
   errorIcon?: string
   errorMessage?: string
@@ -179,7 +179,7 @@ const selectionState = ref<SelectionState>({
 
 // Interactions
 let virtualScrollInteraction: VirtualScrollInteraction | null = null
-let selectionInteraction: SelectionInteraction | null = null
+let selectionInteraction: SelectionInteraction | any | null = null
 
 // Computed
 const currentSheet = computed(() => {
@@ -206,7 +206,7 @@ const visibleData = computed(() => {
   for (let rowIndex = startRow; rowIndex <= endRow; rowIndex++) {
     if (rowIndex >= 0 && rowIndex < currentSheetData.value.length) {
       const row = currentSheetData.value[rowIndex]
-      const visibleRow = row?.map((cell, colIndex) => ({
+      const visibleRow:any = row?.map((cell, colIndex) => ({
         ...cell,
         originalRowIndex: rowIndex,
         originalColIndex: colIndex

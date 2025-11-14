@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue Excel Preview - ES Module Example</title>
+  <link rel="stylesheet" href="../dist/vue-excel-preview.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      color: white;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    .header .badge {
+      display: inline-block;
+      padding: 6px 16px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+
+    .upload-section {
+      padding: 30px;
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      text-align: center;
+    }
+
+    .file-upload-btn {
+      display: inline-block;
+      padding: 12px 32px;
+      background: white;
+      color: #f5576c;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .file-upload-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .upload-hint {
+      color: white;
+      margin-top: 12px;
+      opacity: 0.9;
+    }
+
+    .preview-container {
+      height: 600px;
+    }
+
+    .code-section {
+      padding: 20px 30px;
+      background: #f8f9fa;
+      border-top: 1px solid #e9ecef;
+    }
+
+    .code-section h3 {
+      color: #495057;
+      margin-bottom: 12px;
+      font-size: 1rem;
+    }
+
+    pre {
+      background: #282c34;
+      color: #abb2bf;
+      padding: 16px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+
+    .keyword { color: #c678dd; }
+    .string { color: #98c379; }
+    .function { color: #61afef; }
+    .comment { color: #5c6370; font-style: italic; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>📦 ES Module Example</h1>
+      <div class="badge">使用 ES Module 导入方式</div>
+    </div>
+
+    <div class="card">
+      <div class="upload-section">
+        <label class="file-upload-btn">
+          <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" hidden />
+          📁 选择 Excel 文件
+        </label>
+        <p class="upload-hint">测试 ES Module 打包产物</p>
+      </div>
+
+      <div class="preview-container">
+        <div id="app"></div>
+      </div>
+
+      <div class="code-section">
+        <h3>💡 使用方式：</h3>
+        <pre><code><span class="comment">// 在你的项目中这样使用</span>
+<span class="keyword">import</span> { <span class="function">createApp</span> } <span class="keyword">from</span> <span class="string">'vue'</span>
+<span class="keyword">import</span> { ExcelPreview } <span class="keyword">from</span> <span class="string">'@blackie233/vue-excel-preview'</span>
+<span class="keyword">import</span> <span class="string">'@blackie233/vue-excel-preview/style.css'</span>
+
+<span class="keyword">const</span> app = <span class="function">createApp</span>({
+  components: { ExcelPreview },
+  template: <span class="string">`&lt;ExcelPreview ref="preview" /&gt;`</span>
+})
+
+app.<span class="function">mount</span>(<span class="string">'#app'</span>)</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js",
+      "exceljs": "https://unpkg.com/exceljs@4.4.0/dist/exceljs.min.js",
+      "papaparse": "https://unpkg.com/papaparse@5/papaparse.min.js"
+    }
+  }
+  </script>
+
+  <script type="module">
+    import { createApp } from 'vue'
+    // Note: In real projects, you would import from the package
+    // For this example, we'll use the UMD version via global
+    
+    // Dynamically load dependencies
+    await Promise.all([
+      import('https://unpkg.com/exceljs@4.4.0/dist/exceljs.min.js'),
+      import('https://unpkg.com/papaparse@5/papaparse.min.js')
+    ])
+
+    // Load our UMD build
+    const script = document.createElement('script')
+    script.src = '../dist/excel-preview.umd.js'
+    await new Promise(resolve => {
+      script.onload = resolve
+      document.head.appendChild(script)
+    })
+
+    const { ExcelPreview } = window.VueExcelPreview
+
+    const app = createApp({
+      components: {
+        ExcelPreview
+      },
+      template: `
+        <ExcelPreview
+          ref="previewRef"
+          no-data-message="选择文件测试 ES Module 构建"
+          @parse-complete="handleParseComplete"
+        />
+      `,
+      methods: {
+        handleParseComplete(result) {
+          console.log('✅ [ESM] 解析完成:', result)
+        }
+      }
+    })
+
+    app.mount('#app')
+
+    document.getElementById('fileInput').addEventListener('change', (event) => {
+      const file = event.target.files[0]
+      if (file) {
+        const previewComponent = app._instance.refs.previewRef
+        if (previewComponent) {
+          previewComponent.loadFile(file)
+        }
+      }
+    })
+
+    console.log('%c🎉 ES Module Example Loaded!', 'color: #f5576c; font-size: 16px; font-weight: bold;')
+  </script>
+</body>
+</html>
+

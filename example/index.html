@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue Excel Preview - Example</title>
+  <link rel="stylesheet" href="../dist/vue-excel-preview.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      color: white;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+
+    .upload-section {
+      padding: 30px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      text-align: center;
+    }
+
+    .file-upload-btn {
+      display: inline-block;
+      padding: 12px 32px;
+      background: white;
+      color: #667eea;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .file-upload-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .upload-hint {
+      color: white;
+      margin-top: 12px;
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    .preview-container {
+      height: 600px;
+      display: flex;
+      position: relative;
+    }
+
+    .info-section {
+      padding: 20px 30px;
+      background: #f8f9fa;
+      border-top: 1px solid #e9ecef;
+    }
+
+    .info-item {
+      display: inline-block;
+      margin-right: 20px;
+      font-size: 0.9rem;
+      color: #6c757d;
+    }
+
+    .info-item strong {
+      color: #495057;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      background: #667eea;
+      color: white;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      margin-left: 8px;
+    }
+
+    .features {
+      margin-top: 30px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .feature-card {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-card h3 {
+      color: #667eea;
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+
+    .feature-card p {
+      color: #6c757d;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <div class="upload-section">
+        <label class="file-upload-btn">
+          <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" hidden />
+          📁 选择 Excel 文件
+        </label>
+        <p class="upload-hint">支持 .xlsx、.xls、.csv 格式</p>
+      </div>
+
+      <div class="preview-container">
+        <div id="app" style="flex: 1"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Vue 3 from CDN -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <!-- ExcelJS from CDN -->
+  <script src="https://unpkg.com/exceljs@4.4.0/dist/exceljs.min.js"></script>
+  <!-- PapaParse from CDN -->
+  <script src="https://unpkg.com/papaparse@5/papaparse.min.js"></script>
+  
+  <!-- Our bundled component (UMD) -->
+  <script src="../dist/excel-preview.umd.js"></script>
+
+  <script>
+    const { createApp } = Vue
+    const { ExcelPreview } = VueExcelPreview
+
+    const app = createApp({
+      components: {
+        ExcelPreview
+      },
+      template: `
+          <ExcelPreview
+              ref="previewRef"
+              @parse-complete="handleParseComplete"
+          >
+            <template #error-icon>
+              <svg style="width: 64px; height: 64px; color: #dc3545;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                <line x1="12" y1="8" x2="12" y2="12" stroke-width="2"/>
+                <line x1="12" y1="16" x2="12.01" y2="16" stroke-width="2"/>
+              </svg>
+            </template>
+          </ExcelPreview>
+      `,
+      methods: {
+        handleParseComplete(result) {
+          console.log('解析完成:', result)
+        }
+      }
+    })
+
+    app.mount('#app')
+
+    // File input handler
+    document.getElementById('fileInput').addEventListener('change', (event) => {
+      const file = event.target.files[0]
+      if (file) {
+        const previewComponent = app._instance.refs.previewRef
+        if (previewComponent) {
+          previewComponent.loadFile(file)
+        }
+      }
+    })
+  </script>
+</body>
+</html>
