@@ -26,7 +26,6 @@ export {
   type VisibleRange,
 } from './core/Interaction'
 
-// Export types
 export type {
   ICellData,
   ICellStyle,
@@ -35,7 +34,6 @@ export type {
   IParseResult,
 } from './core/types'
 
-// Install function for Vue.use()
 export function install(app: App) {
   app.component('ExcelPreview', ExcelPreview)
 }

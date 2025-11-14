@@ -1,7 +1,7 @@
 {
   "name": "@blackie233/vue-excel-preview",
   "version": "1.0.0",
-  "description": "一个基于 Vue 3 和设计模式构建的轻量级 Excel 预览组件 | A lightweight Excel preview component built with Vue 3 and design patterns",
+  "description": "一个基于 Vue 3 构建的轻量级 Excel 预览组件 | A lightweight Excel preview component built with Vue 3 and design patterns",
   "type": "module",
   "main": "./dist/excel-preview.umd.js",
   "module": "./dist/excel-preview.es.js",

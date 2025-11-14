@@ -1,4 +1,4 @@
-# 📊 Excel 预览器 - 设计模式重构版
+# 📊 Excel 预览器 
 
 一个基于 Vue 3 + TypeScript 构建的 Excel 预览组件。
 
