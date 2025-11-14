@@ -1,0 +1,69 @@
+{
+  "name": "@blackie233/vue-excel-preview",
+  "version": "1.0.0",
+  "description": "一个基于 Vue 3 和设计模式构建的轻量级 Excel 预览组件 | A lightweight Excel preview component built with Vue 3 and design patterns",
+  "type": "module",
+  "main": "./dist/excel-preview.umd.js",
+  "module": "./dist/excel-preview.es.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/excel-preview.es.js",
+      "require": "./dist/excel-preview.umd.js"
+    },
+    "./style.css": "./dist/style.css"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "build:lib": "vue-tsc --project tsconfig.lib.json && vite build --mode lib",
+    "preview": "vite preview",
+    "prepublishOnly": "npm run build:lib"
+  },
+  "peerDependencies": {
+    "vue": "^3.3.0"
+  },
+  "dependencies": {
+    "exceljs": "^4.4.0",
+    "papaparse": "^5.5.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.0",
+    "@types/papaparse": "^5.5.0",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "@vue/tsconfig": "^0.8.1",
+    "sass": "^1.94.0",
+    "typescript": "~5.9.3",
+    "vite": "^7.2.2",
+    "vue": "^3.5.24",
+    "vue-tsc": "^3.1.3"
+  },
+  "keywords": [
+    "vue",
+    "vue3",
+    "excel",
+    "xlsx",
+    "csv",
+    "preview",
+    "viewer",
+    "component",
+    "typescript",
+    "design-patterns"
+  ],
+  "author": "blackie233",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/vue-excel-preview.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/vue-excel-preview/issues"
+  },
+  "homepage": "https://github.com/your-username/vue-excel-preview#readme"
+}

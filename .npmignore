@@ -1,0 +1,26 @@
+# Source files
+src/
+public/
+.vscode/
+node_modules/
+
+# Config files
+.gitignore
+.editorconfig
+vite.config.ts
+tsconfig.json
+tsconfig.app.json
+tsconfig.node.json
+
+# Demo files
+index.html
+
+# Development files
+*.log
+.DS_Store
+coverage/
+.nyc_output/
+
+# Build artifacts (keep dist/)
+!dist/
+
