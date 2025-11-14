@@ -8,21 +8,6 @@
 
 ## 🚀 快速开始
 
-### 📦 安装
-
-```bash
-# npm
-npm install @blackie233/vue-excel-preview
-
-# yarn
-yarn add @blackie233/vue-excel-preview
-
-# pnpm
-pnpm add @blackie233/vue-excel-preview
-```
-
-### 🎨 局部使用
-
 ```vue
 <template>
   <div>
